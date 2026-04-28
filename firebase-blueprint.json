@@ -1,0 +1,59 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A luxury botanical product in the catalog.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string", "enum": ["Skincare", "Haircare", "Body", "Fragrance", "Wellness"] },
+        "price": { "type": "number" },
+        "originalPrice": { "type": "number" },
+        "description": { "type": "string" },
+        "images": { "type": "array", "items": { "type": "string" } },
+        "specs": { "type": "object", "additionalProperties": { "type": "string" } },
+        "stock": { "type": "number" }
+      },
+      "required": ["name", "category", "price", "description", "images", "specs", "stock"]
+    },
+    "User": {
+      "title": "User",
+      "description": "A user of the application.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "name": { "type": "string" },
+        "loyaltyPoints": { "type": "number" },
+        "avatar": { "type": "string" },
+        "addresses": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["email", "name", "loyaltyPoints", "addresses"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "An order placed by a user.",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "format": "date-time" },
+        "items": { "type": "array", "items": { "type": "object" } },
+        "total": { "type": "number" },
+        "status": { "type": "string", "enum": ["Pending", "Shipped", "Delivered", "Cancelled"] }
+      },
+      "required": ["date", "items", "total", "status"]
+    }
+  },
+  "firestore": {
+    "products/{productId}": {
+      "schema": "Product",
+      "description": "Public catalog of products."
+    },
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profiles."
+    },
+    "users/{userId}/orders/{orderId}": {
+      "schema": "Order",
+      "description": "User order history."
+    }
+  }
+}
